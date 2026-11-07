@@ -1,0 +1,2 @@
+"use client";
+export function SongSortBar({sort,onSort,count}:{sort:string;onSort:(value:string)=>void;count:number}) { return <div className="filter-row" role="group" aria-label="Sort songs">{["All tracks","Recently added","Most played"].map(item=><button type="button" key={item} aria-pressed={sort===item} className={sort===item?"filter-active":""} onClick={()=>onSort(item)}>{item}</button>)}<span className="song-count" aria-live="polite">{count} songs</span></div>; }

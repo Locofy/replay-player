@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePlayer } from "@/components/player-context";
-import { ArrowRight, Disc3, Heart, MoreHorizontal, Music2, Play } from "lucide-react";
+import { ArrowRight, Disc3, Heart, Music2, Play } from "lucide-react";
 import { categories as defaultCategories, type Track } from "@/lib/music";
 
 export const PLACEHOLDER_TRACK: Track = {

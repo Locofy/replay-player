@@ -1,0 +1,3 @@
+import { PageHeading, SectionHeading } from "@/components/music-ui";
+import { CollectionCard, TrackShelf, DiscoveryLinks } from "@/components/discovery/discovery-cards";
+export default function Discover(){return <><PageHeading eyebrow="EXPLORE REPLAY" title="Discover something new" description="Use the search bar above to find songs, artists, and albums."/><div className="collection-grid"><CollectionCard title="Late night essentials" description="Slow down and settle into the evening." cover="/covers/03.png"/><CollectionCard title="A brighter kind of day" description="Warm melodies to lift your afternoon." cover="/covers/02.png"/></div><SectionHeading title="Worth a listen"/><TrackShelf/><DiscoveryLinks/></>}

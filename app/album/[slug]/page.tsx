@@ -1,5 +1,5 @@
-import { AlbumView } from "@/components/views";
+import { AlbumContent } from "@/components/album/album-content";
 export default async function Album({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  return <AlbumView slug={slug} />;
+  return <AlbumContent slug={slug} />;
 }
