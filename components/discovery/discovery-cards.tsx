@@ -2,10 +2,10 @@ import Link from "next/link";
 import { CoverArt, SongCard } from "@/components/music-ui";
 import { tracks } from "@/lib/music";
 
-export function ArtistCard({ name = "Featured artist", genre = "Independent artist", cover = "/covers/02.png", href = "/songs" }: {name?:string;genre?:string;cover?:string;href?:string}) {
+export function ArtistCard({ name = "Lana Rivers", genre = "Dream pop · Indie", cover = "/covers/02.png", href = "/songs" }: {name?:string;genre?:string;cover?:string;href?:string}) {
   return <Link href={href} className="artist-card"><CoverArt src={cover} alt={`${name} portrait`}/><b>{name}</b><small>{genre}</small></Link>;
 }
-export function CollectionCard({title="Your next favorite mix",description="A soundtrack for every moment",cover="/covers/01.png",href="/songs"}:{title?:string;description?:string;cover?:string;href?:string}) {
+export function CollectionCard({title="Midnight City",description="24 songs · A soundtrack for late night drives",cover="/covers/03.png",href="/songs"}:{title?:string;description?:string;cover?:string;href?:string}) {
  return <Link href={href} className="collection-card"><CoverArt src={cover} alt={`${title} artwork`}/><div><b>{title}</b><p>{description}</p><span>Explore collection →</span></div></Link>;
 }
 export function StatCard({label="Songs discovered",value="128",detail="Your listening journey"}:{label?:string;value?:string;detail?:string}) {

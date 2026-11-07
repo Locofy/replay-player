@@ -3,24 +3,30 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePlayer } from "@/components/player-context";
 import { ArrowRight, Disc3, Heart, Music2, Play } from "lucide-react";
-import { categories as defaultCategories, type Track } from "@/lib/music";
+import { categories as defaultCategories, tracks, type Track } from "@/lib/music";
 
 export const PLACEHOLDER_TRACK: Track = {
-  id: "placeholder-track", title: "Song title", artist: "Artist name", album: "Album title",
-  duration: "0:00", category: "Uncategorized", cover: "",
+  id: "placeholder-track", title: "Waves of Time", artist: "Lana Rivers", album: "Afterglow",
+  duration: "4:08", category: "Relax", cover: "/covers/02.png",
 };
 
 export function CoverArt({ src = "", alt = "Album artwork", className = "", rounded = true }: {
   src?: string; alt?: string; className?: string; rounded?: boolean;
 }) {
-  const [failed, setFailed] = useState(!src);
+  const source = src || "/covers/02.png";
   const shapeClass = rounded ? "" : "cover-art-circle";
   return <span className={`cover-art ${shapeClass} ${className}`} aria-label={alt || undefined} role={alt ? "img" : undefined} aria-hidden={alt ? undefined : true}>
-    {failed ? <span className="cover-art-placeholder"><Disc3 size={24} strokeWidth={1.5} aria-hidden="true"/></span> : <img src={src} alt="" aria-hidden="true" onError={() => setFailed(true)}/>}
+    <CoverImage key={source} src={source}/>
   </span>;
 }
 
-export function PageHeading({ eyebrow = "YOUR LIBRARY", title = "Music library", description = "Your music will appear here.", action, className = "" }: {
+function CoverImage({ src }: { src: string }) {
+  const [attempt, setAttempt] = useState(0);
+  if (attempt > 1) return <span className="cover-art-placeholder"><Disc3 size={28} strokeWidth={1.5} aria-hidden="true"/></span>;
+  return <img src={attempt === 0 ? src : "/covers/02.png"} alt="" aria-hidden="true" onError={() => setAttempt(value => value + 1)}/>;
+}
+
+export function PageHeading({ eyebrow = "YOUR LIBRARY", title = "Music library", description = "Your favorite sounds, all in one place.", action, className = "" }: {
   eyebrow?: string; title?: string; description?: string; action?: React.ReactNode; className?: string;
 }) {
   return <div className={`page-heading ${className}`}><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="subheading">{description}</p></div>{action}</div>;
@@ -39,12 +45,14 @@ export function CategoryChips({ items = defaultCategories, initialValue = "All",
   return <div className={`chips ${className}`} role="group" aria-label="Filter songs by category">{items.map(item => <button key={item} type="button" className={selected === item ? "selected" : ""} aria-pressed={selected === item} onClick={() => { setSelected(item); onSelect?.(item); }}>{item}</button>)}</div>;
 }
 
-export function SongCard({ track = PLACEHOLDER_TRACK, href, className = "" }: { track?: Track; href?: string; className?: string }) {
+export const DEFAULT_SONG_CARD_TRACK: Track = { ...tracks[0] };
+
+export function SongCard({ track = DEFAULT_SONG_CARD_TRACK, href, className = "", width = 240 }: { track?: Track; href?: string; className?: string; width?: number }) {
   const { play } = usePlayer();
   const destination = href ?? (track.id === PLACEHOLDER_TRACK.id ? "/songs" : `/album/${encodeURIComponent(track.album.toLowerCase().replaceAll(" ", "-"))}`);
-  return <Link href={destination} className={`track-card ${className}`} onClick={() => track.id !== PLACEHOLDER_TRACK.id && play(track)}>
-    <div className="cover-wrap"><CoverArt src={track.cover} alt={`${track.album || "Album"} cover`}/><span className="cover-play"><Play size={15} fill="currentColor"/></span></div>
-    <b>{track.title || PLACEHOLDER_TRACK.title}</b><small>{track.artist || PLACEHOLDER_TRACK.artist}</small>
+  return <Link href={destination} className={`track-card ${className}`} style={{ width, maxWidth: "100%", minWidth: 0 }} onClick={() => track.id !== PLACEHOLDER_TRACK.id && play(track)}>
+    <div className="cover-wrap"><CoverArt src={track.cover || DEFAULT_SONG_CARD_TRACK.cover} alt={`${track.album || DEFAULT_SONG_CARD_TRACK.album} cover`}/><span className="cover-play"><Play size={15} fill="currentColor"/></span></div>
+    <b>{track.title || DEFAULT_SONG_CARD_TRACK.title}</b><small>{track.artist || DEFAULT_SONG_CARD_TRACK.artist}</small>
   </Link>;
 }
 
@@ -74,14 +82,14 @@ export function EmptyState({ title = "Nothing to play yet", description = "Your 
   return <div className="empty-state"><span><Icon size={23} strokeWidth={1.6}/></span><h2>{title}</h2><p>{description}</p></div>;
 }
 
-export function ToggleRow({ title = "Setting name", description = "Add a short explanation for this option.", defaultChecked = false, onChange }: {
+export function ToggleRow({ title = "Autoplay", description = "Keep the music going with similar songs.", defaultChecked = false, onChange }: {
   title?: string; description?: string; defaultChecked?: boolean; onChange?: (enabled: boolean) => void;
 }) {
   const [enabled, setEnabled] = useState(defaultChecked);
   return <div className="setting-switch"><div><b>{title}</b><small>{description}</small></div><button type="button" onClick={() => { const next = !enabled; setEnabled(next); onChange?.(next); }} className={`switch ${enabled ? "on" : ""}`} aria-label={title} aria-pressed={enabled}><i aria-hidden="true"/></button></div>;
 }
 
-export function PlaylistTile({ title = "New playlist", description = "A playlist for your next mood.", cover = "", href = "/songs" }: {
+export function PlaylistTile({ title = "Sunday Afternoon", description = "20 songs · Easy listening for slow days", cover = "/covers/02.png", href = "/songs" }: {
   title?: string; description?: string; cover?: string; href?: string;
 }) {
   return <Link href={href} className="playlist-tile"><CoverArt src={cover} alt={`${title} cover`}/><span><b>{title}</b><small>{description}</small></span><span className="tile-play"><Play size={14} fill="currentColor"/></span></Link>;
