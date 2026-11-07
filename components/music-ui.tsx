@@ -20,10 +20,10 @@ export function CoverArt({ src = "", alt = "Album artwork", className = "", roun
   </span>;
 }
 
-function CoverImage({ src }: { src: string }) {
+function CoverImage({ src = "/covers/02.png" }: { src?: string }) {
   const [attempt, setAttempt] = useState(0);
   if (attempt > 1) return <span className="cover-art-placeholder"><Disc3 size={28} strokeWidth={1.5} aria-hidden="true"/></span>;
-  return <img src={attempt === 0 ? src : "/covers/02.png"} alt="" aria-hidden="true" onError={() => setAttempt(value => value + 1)}/>;
+  return <img width={180} height={180} className="cover-image" src={attempt === 0 ? src : "/covers/02.png"} alt="" aria-hidden="true" onError={() => setAttempt(value => value + 1)}/>;
 }
 
 export function PageHeading({ eyebrow = "YOUR LIBRARY", title = "Music library", description = "Your favorite sounds, all in one place.", action, className = "" }: {
