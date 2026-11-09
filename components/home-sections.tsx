@@ -18,7 +18,7 @@ export function FeaturedCarousel() {
   const select = (nextIndex: number) => setIndex((nextIndex + featuredTracks.length) % featuredTracks.length);
 
 
-  return <section className="hero" aria-roledescription="carousel" aria-label="Featured songs" onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => { if (touchStart.current === null) return; const distance = (event.changedTouches[0]?.clientX ?? touchStart.current) - touchStart.current; if (Math.abs(distance) > 42) move(distance < 0 ? 1 : -1); touchStart.current = null; }}>
+  return <section style={{ flexDirection: "row" }} className="hero" aria-roledescription="carousel" aria-label="Featured songs" onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => { if (touchStart.current === null) return; const distance = (event.changedTouches[0]?.clientX ?? touchStart.current) - touchStart.current; if (Math.abs(distance) > 42) move(distance < 0 ? 1 : -1); touchStart.current = null; }}>
     <CarouselPreviews side="left" index={index} onSelect={select}/>
     <CoverArt key={track.id} className="hero-main" src={track.cover} alt={`${track.album} album cover`}/>
     <CarouselCaption track={track}/>

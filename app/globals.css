@@ -447,3 +447,46 @@
 
 .cover-image{display:block;width:180px;height:180px;max-width:100%;object-fit:cover;border-radius:12px}
 .cover-art>.cover-image{width:100%;height:100%;border-radius:inherit}
+
+/* Neutral charcoal surfaces give the dark theme a little canvas separation. */
+:root:not([data-theme=light]){--bg:#1b1c1e;--panel:#232528;--panel2:#2b2d31;--line:#393c41;--muted:#b5b8c0;--faint:#969ba5;--white:#f7f8fa;color-scheme:dark}
+:root:not([data-theme=light]) .sidebar{background:#191a1c;border-color:#303236}
+:root:not([data-theme=light]) .topbar{background:#1b1c1ef2}
+:root:not([data-theme=light]) .player-bar,:root:not([data-theme=light]) .mobile-nav{background:#222427;border-color:#36393e}
+:root:not([data-theme=light]) .search,:root:not([data-theme=light]) .profile,:root:not([data-theme=light]) .round-action{background:#292b2f}
+:root:not([data-theme=light]) .search input::placeholder{color:#969ca6}
+:root:not([data-theme=light]) .settings-panel,:root:not([data-theme=light]) .account-card,:root:not([data-theme=light]) .account-details>div,:root:not([data-theme=light]) .playlist-tile,:root:not([data-theme=light]) .empty-state{background:var(--panel);border-color:var(--line)}
+:root:not([data-theme=light]) .settings-menu .setting-selected,:root:not([data-theme=light]) .theme-option,:root:not([data-theme=light]) .filter-row .filter-active{background:var(--panel2);border-color:var(--line)}
+:root:not([data-theme=light]) .nav-link:hover,:root:not([data-theme=light]) .playlist-link:hover,:root:not([data-theme=light]) .track-row:hover{background:#2b2d31}
+:root:not([data-theme=light]) .select-control select{background:#2b2d31;color:var(--white);border-color:#45484e}
+:root:not([data-theme=light]) .select-control select option{background:#2b2d31;color:var(--white)}
+:root:not([data-theme=light]) .table-head,:root:not([data-theme=light]) .track-row,:root:not([data-theme=light]) .setting-switch,:root:not([data-theme=light]) .setting-select,:root:not([data-theme=light]) .playing-bottom{border-color:#36393e}
+:root:not([data-theme=light]) .hero-caption{background:linear-gradient(110deg,#242629f5,#202225ed);border-color:#45484e}
+:root:not([data-theme=light]) .hero-caption small,:root:not([data-theme=light]) .subheading,:root:not([data-theme=light]) .track-card small,:root:not([data-theme=light]) .setting-switch small,:root:not([data-theme=light]) .setting-select small{color:var(--muted)}
+:root:not([data-theme=light]) .app-shell.playing-mode .playing-screen::before{background:radial-gradient(ellipse at 50% 38%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 44%),radial-gradient(ellipse at 50% 100%,#292b2e 0,transparent 65%)}
+.settings-console{padding-top:12px;color:var(--white)}
+.settings-title{font-size:34px;line-height:1.1;margin:0;letter-spacing:-.8px}
+.settings-sub{color:var(--muted);font-size:13px;margin:6px 0 0}
+.settings-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 18px}
+.settings-tabs button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;color:var(--muted);padding:9px 16px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer}
+.settings-tabs button:hover{color:var(--white)}
+.settings-tabs button.setting-selected{background:var(--white);color:var(--bg);border-color:var(--white)}
+.settings-console-panel{outline:0;animation:settingsIn .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes settingsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sound-band{position:relative;overflow:hidden;border-radius:20px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 60%),var(--panel)}
+.sound-band h2{margin:0;font-size:20px;letter-spacing:-.3px}
+.sound-band p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.sound-band>div,.sound-facts{position:relative}
+.sound-facts{display:flex;gap:28px;flex-wrap:wrap;margin:0}
+.sound-facts dt{color:var(--muted);font-size:12px}
+.sound-facts dd{margin:0;font-size:18px;font-weight:700}
+.sound-wave{position:absolute;right:0;bottom:0;opacity:.5;pointer-events:none;fill:var(--accent)}
+.settings-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:16px}
+.settings-card{background:var(--panel);border-radius:16px;padding:18px 20px 6px;min-width:0}
+.settings-card h3{font-size:14px;margin:0 0 4px;color:var(--muted);font-weight:600}
+.settings-card .setting-switch{flex-wrap:wrap}
+.choice-chips{display:inline-flex;flex-wrap:wrap;gap:4px;padding:3px;border-radius:99px;background:color-mix(in srgb,var(--white) 6%,transparent)}
+.choice-chips button{border:0;background:transparent;color:var(--muted);font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;cursor:pointer}
+.choice-chips button[aria-checked=true]{background:var(--accent);color:#16110d}
+@media(max-width:760px){.sound-band{padding:20px}.settings-cards{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.settings-console-panel{animation:none}}
