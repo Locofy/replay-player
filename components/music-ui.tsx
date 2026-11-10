@@ -47,7 +47,7 @@ export function CategoryChips({ items = defaultCategories, initialValue = "All",
 
 export const DEFAULT_SONG_CARD_TRACK: Track = { ...tracks[0] };
 
-export function SongCard({ track = DEFAULT_SONG_CARD_TRACK, href, className = "", width = 240 }: { track?: Track; href?: string; className?: string; width?: number }) {
+export function SongCard({ track = DEFAULT_SONG_CARD_TRACK, href, className = "", width = "100%" }: { track?: Track; href?: string; className?: string; width?: number | string }) {
   const { play } = usePlayer();
   const destination = href ?? (track.id === PLACEHOLDER_TRACK.id ? "/songs" : `/album/${encodeURIComponent(track.album.toLowerCase().replaceAll(" ", "-"))}`);
   return <Link href={destination} className={`track-card ${className}`} style={{ width, maxWidth: "100%", minWidth: 0 }} onClick={() => track.id !== PLACEHOLDER_TRACK.id && play(track)}>

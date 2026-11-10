@@ -41,7 +41,7 @@ export function MoodPlaylistsSection() {
   return <section className="lower-home"><SectionHeading title="Made for your mood"/><div className="playlist-grid">{playlists.slice(0, 4).map((title, i) => <PlaylistTile key={title} title={title} description={`${18 + i * 2} tracks · Curated for you`} cover={tracks[i]?.cover}/>)}</div></section>;
 }
 
-function CarouselCaption({track}:{track:Track}) { const {play}=usePlayer(); return <div className="hero-caption"><span aria-live="polite" aria-atomic="true"><b>{track.title}</b><small>{track.artist}</small></span><Link href={`/playing/${track.id}`} className="hero-play" aria-label={`Play ${track.title}`} onClick={() => play(track)}><Play size={14} fill="currentColor" aria-hidden="true"/></Link></div>; }
+function CarouselCaption({track}:{track:Track}) { const {play}=usePlayer(); return <div style={{ borderColor: "rgb(66, 66, 66)" }} className="hero-caption"><span aria-live="polite" aria-atomic="true"><b>{track.title}</b><small>{track.artist}</small></span><Link href={`/playing/${track.id}`} className="hero-play" aria-label={`Play ${track.title}`} onClick={() => play(track)}><Play size={14} fill="currentColor" aria-hidden="true"/></Link></div>; }
 
 function CarouselPreview({track,position,onSelect}:{track:Track;position:number;onSelect:()=>void}) {
  return <button type="button" className={`hero-small h${position}`} aria-label={`Show ${track.title}`} onClick={onSelect}><CoverArt className="hero-small-art" src={track.cover} alt=""/></button>;
