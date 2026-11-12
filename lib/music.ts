@@ -1,4 +1,4 @@
-export type Track = { id: string; title: string; artist: string; album: string; duration: string; category: string; cover: string; favorite?: boolean };
+export type Track = { id: string; title: string; artist: string; album: string; duration: string; category: string; cover: string; favorite?: boolean; audio?: string; uploaded?: boolean };
 export const tracks: Track[] = [
   { id:"golden-days", title:"Golden Days", artist:"Felix Carter", album:"Echoes", duration:"3:42", category:"Relax", cover:"/covers/01.png", favorite:true },
   { id:"waves-of-time", title:"Waves of Time", artist:"Lana Rivers", album:"Afterglow", duration:"4:08", category:"Sad", cover:"/covers/02.png" },
