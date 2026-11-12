@@ -4,11 +4,11 @@ import { FeaturedCarousel, HomeCategoryPicker, MoodPlaylistsSection, PopularSong
 import { DiscoveryLinks } from "@/components/discovery/discovery-cards";
 export default function Home() {
   const [active, setActive] = useState("All");
-  return <>
+  return <div className="page-surface" style={{ backgroundColor: "var(--bg)", color: "var(--white)" }}>
     <FeaturedCarousel/>
     <HomeCategoryPicker onSelect={setActive}/>
     <PopularSongsSection category={active}/>
     <MoodPlaylistsSection/>
     <DiscoveryLinks/>
-  </>;
+  </div>;
 }
