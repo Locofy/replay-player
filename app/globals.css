@@ -447,3 +447,54 @@
 
 .cover-image{display:block;width:180px;height:180px;max-width:100%;object-fit:cover;border-radius:12px}
 .cover-art>.cover-image{width:100%;height:100%;border-radius:inherit}
+/* Split stage listening screen */
+.app-shell.playing-mode .sidebar{bottom:0}
+.split-player{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;min-height:calc(100dvh - 65px);margin:0 calc(-1*clamp(18px,4vw,64px));padding:20px clamp(18px,4vw,64px) 24px;color:var(--white)}
+.split-glow{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.split-glow::before{content:"";position:absolute;left:-10%;top:-10%;width:70%;height:120%;background:var(--cover) center/cover;filter:blur(110px) saturate(1.5);opacity:.32}
+.split-glow::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 20%,var(--bg) 85%),linear-gradient(180deg,transparent 60%,var(--bg))}
+.split-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.split-back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+.split-up{color:var(--muted);font-size:12px;min-width:0}
+.split-body{flex:1;display:grid;grid-template-columns:minmax(0,340px) minmax(0,480px);justify-content:center;gap:24px;align-items:stretch;width:100%;max-height:640px}
+.split-main{display:flex;flex-direction:column;justify-content:center;gap:16px;min-width:0}
+.split-main>.cover-art{width:100%;max-width:240px;align-self:center;border-radius:16px;box-shadow:0 18px 40px #0007}
+.split-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.split-meta h1{font-size:24px;line-height:1.15;letter-spacing:-.6px;margin:0 0 4px;text-wrap:balance}
+.split-meta p{margin:0;color:var(--muted);font-size:13px}
+.split-player .playing-range{margin-top:0}
+.split-player .time{margin-top:8px}
+.split-player .big-controls{margin:0;max-width:none;gap:6px;justify-content:space-between}
+.split-player .big-controls .large-play{width:56px;height:56px}
+.split-fav{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.split-fav[aria-pressed=true]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.split-lyrics-toggle{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;align-self:center}
+.split-lyrics-toggle[aria-pressed=true]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.split-lyrics{position:relative;overflow:hidden;border-radius:24px;display:flex;align-items:center;padding:0 clamp(24px,4vw,56px);background:radial-gradient(80% 90% at 0% 50%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 70%),radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--white) 6%,transparent) 1px,transparent 0) 0 0/20px 20px,color-mix(in srgb,var(--panel) 60%,transparent);border:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+.live-lyrics{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;font-size:clamp(20px,2vw,26px);font-weight:700;letter-spacing:-.7px;line-height:1.2;-webkit-mask-image:linear-gradient(180deg,#000 75%,transparent);mask-image:linear-gradient(180deg,#000 75%,transparent)}
+.live-lyrics li{opacity:.24;transition:opacity .3s,color .3s}
+.live-lyrics li.lyric-near{opacity:.5}
+.live-lyrics li.lyric-active{opacity:1;color:var(--accent)}
+.live-lyrics-empty{margin:0;font-size:13px;color:var(--muted)}
+.split-body.no-lyrics{grid-template-columns:minmax(0,960px);align-items:center;max-height:none}
+.no-lyrics .split-main{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);column-gap:48px;row-gap:16px;align-content:center;align-items:center;animation:split-in .32s ease-out}
+.no-lyrics .split-main>.cover-art{grid-row:1/span 4;max-width:none;border-radius:18px;box-shadow:0 24px 50px #000a,0 0 0 1px #ffffff14}
+.no-lyrics .split-main>:not(.cover-art){min-width:0}
+.no-lyrics .split-main .big-controls{max-width:380px}
+.no-lyrics .split-meta h1{font-size:34px;letter-spacing:-1px}
+.no-lyrics .split-meta p{font-size:15px}
+.no-lyrics .split-lyrics-toggle{justify-self:start}
+@keyframes split-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.no-lyrics .split-main{animation:none}.live-lyrics li{transition:none}}
+@media(max-width:860px){.split-body,.split-body.no-lyrics{grid-template-columns:1fr;max-height:none}.split-main>.cover-art{width:min(64vw,260px)}.no-lyrics .split-main{grid-template-columns:1fr}.no-lyrics .split-main>.cover-art{grid-row:auto;width:min(64vw,260px);justify-self:center}.split-lyrics{padding:28px 20px}.live-lyrics{font-size:21px;gap:10px}.live-lyrics li:nth-child(n+6){display:none}}
+:root[data-theme=light] .split-glow::after{background:linear-gradient(90deg,transparent 20%,var(--bg) 85%),linear-gradient(180deg,transparent 60%,var(--bg))}
+@property --progress{syntax:'<percentage>';inherits:true;initial-value:0%}
+.playing-timeline{transition:--progress 1s linear}
+
+.playing-timeline{position:relative}
+.playing-timeline .playing-range{position:relative;z-index:1}
+.playing-wave{position:absolute;left:0;bottom:2.5px;width:var(--progress);height:14px;transform:translateY(50%);background:var(--accent);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='14'%3E%3Cpath d='M0 7 Q6 1 12 7 T24 7' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 0 50%/24px 14px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='14'%3E%3Cpath d='M0 7 Q6 1 12 7 T24 7' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 0 50%/24px 14px repeat-x;opacity:0;pointer-events:none;transition:opacity .3s;animation:playing-wave 1s linear infinite paused}
+.playing-timeline.is-playing .playing-wave{opacity:1;animation-play-state:running}
+.app-shell.playing-mode .playing-card .playing-timeline.is-playing .playing-range{background:linear-gradient(to right,transparent var(--progress,0%),color-mix(in srgb,var(--white) 17%,transparent) var(--progress,0%))}
+@keyframes playing-wave{to{-webkit-mask-position:24px 50%;mask-position:24px 50%}}
+@media(prefers-reduced-motion:reduce){.playing-timeline{transition:none}.playing-wave{animation:none}}
