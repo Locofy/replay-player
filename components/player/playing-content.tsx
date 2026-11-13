@@ -15,7 +15,7 @@ export function PlayingContent({ id }: { id: string }) {
   const routeTrack=tracks.find(item=>item.id===id)??tracks[5]; const {currentTrack,play}=usePlayer();
   useEffect(()=>{if(routeTrack&&routeTrack.id!==currentTrack.id)play(routeTrack)},[id]);
   const track=currentTrack;
-  return <div className="playing-screen"><Link href="/" className="back-link"><ChevronDown size={15}/> Back to Replay</Link><div className="playing-card"><CoverArt src={track.cover} alt={`${track.album} cover`}/><p className="eyebrow">NOW PLAYING</p><h1>{track.title}</h1><p className="subheading">{track.artist} · {track.album}</p>
+  return <div className="playing-screen"><Link href="/" className="back-link"><ChevronDown size={15}/> Back to homescreen</Link><div className="playing-card"><CoverArt src={track.cover} alt={`${track.album} cover`}/><p style={{ color: "var(--muted)" }} className="eyebrow">NOW PLAYING</p><h1>{track.title}</h1><p className="subheading">{track.artist} · {track.album}</p>
     <TrackTimeline/>
     <PlaybackControls/>
     <PlayerActions/>
