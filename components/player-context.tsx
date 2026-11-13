@@ -21,6 +21,8 @@ type PlayerContextValue = {
   isFavorite: (id: string) => boolean;
   toggleShuffle: () => void;
   toggleRepeat: () => void;
+  library: Track[];
+  addUpload: (track: Track) => void;
 };
 const PlayerContext = createContext<PlayerContextValue | null>(null);
 const durationSeconds = (duration: string) => {
@@ -36,7 +38,13 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
   const [favorites, setFavorites] = useState<string[]>(() => tracks.filter(item => item.favorite).map(item => item.id));
+  const [uploads, setUploads] = useState<Track[]>([]);
+  const library = useMemo(() => [...uploads, ...tracks], [uploads]);
   const duration = durationSeconds(track.duration);
+  useEffect(() => {
+    fetch("/api/uploads").then(response => response.ok ? response.json() : []).then((items: Track[]) => setUploads(items)).catch(() => {});
+  }, []);
+  const addUpload = useCallback((upload: Track) => setUploads(existing => [upload, ...existing.filter(item => item.id !== upload.id)]), []);
 
   const play = useCallback((nextTrack: Track) => {
     setTrack(nextTrack);
@@ -44,15 +52,15 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     setIsPlaying(true);
   }, []);
   const next = useCallback(() => {
-    const currentIndex = tracks.findIndex(item => item.id === track.id);
-    const nextIndex = shuffle ? (currentIndex + 1 + Math.floor(Math.random() * (tracks.length - 1))) % tracks.length : (currentIndex + 1) % tracks.length;
-    play(tracks[nextIndex] ?? tracks[0]);
-  }, [play, shuffle, track.id]);
+    const currentIndex = library.findIndex(item => item.id === track.id);
+    const nextIndex = shuffle ? (currentIndex + 1 + Math.floor(Math.random() * (library.length - 1))) % library.length : (currentIndex + 1) % library.length;
+    play(library[nextIndex] ?? library[0]);
+  }, [library, play, shuffle, track.id]);
   const previous = useCallback(() => {
     if (currentTime > 3) { setCurrentTime(0); return; }
-    const currentIndex = tracks.findIndex(item => item.id === track.id);
-    play(tracks[(currentIndex - 1 + tracks.length) % tracks.length] ?? tracks[0]);
-  }, [currentTime, play, track.id]);
+    const currentIndex = library.findIndex(item => item.id === track.id);
+    play(library[(currentIndex - 1 + library.length) % library.length] ?? library[0]);
+  }, [currentTime, library, play, track.id]);
   useEffect(() => {
     if (!isPlaying) return;
     const timer = window.setInterval(() => setCurrentTime(time => {
@@ -73,7 +81,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     togglePlayback: () => setIsPlaying(value => !value), next, previous,
     seek: time => setCurrentTime(Math.max(0, Math.min(duration, time))), setVolume,
     toggleFavorite, isFavorite, toggleShuffle: () => setShuffle(value => !value), toggleRepeat: () => setRepeat(value => !value),
-  }), [track, isPlaying, currentTime, duration, volume, favorites, shuffle, repeat, play, next, previous, toggleFavorite, isFavorite]);
+    library, addUpload,
+  }), [track, isPlaying, currentTime, duration, volume, favorites, shuffle, repeat, play, next, previous, toggleFavorite, isFavorite, library, addUpload]);
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;
 }
 
