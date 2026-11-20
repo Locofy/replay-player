@@ -19,7 +19,7 @@ export default function Settings() {
     <div className="settings-layout">
       <SettingsNavigation section={section} onSelect={setSection}/>
       <section className="settings-panel" id="settings-tabpanel" role="tabpanel" aria-labelledby={`settings-tab-${section.toLowerCase()}`} tabIndex={0}>
-        <div className="settings-panel-heading"><span className="settings-heading-icon"><SectionIcon size={18}/></span><div><h2>{section}</h2><p>{selected.description}</p></div></div>
+        <div className="settings-panel-heading"><span className="settings-heading-icon"><SectionIcon size={18}/></span><div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", columnGap: "0px", flex: "1", minWidth: "0px" }}><h2>{section}</h2><p>{selected.description}</p></div></div>
         {section === "Playback" && <PlaybackSettings/>}
         {section === "Appearance" && <AppearanceSettings/>}
         {section === "Notifications" && <NotificationsSettings/>}
