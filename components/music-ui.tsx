@@ -82,12 +82,11 @@ export function EmptyState({ title = "Nothing to play yet", description = "Your 
   return <div className="empty-state"><span><Icon size={23} strokeWidth={1.6}/></span><h2>{title}</h2><p>{description}</p></div>;
 }
 
-export function ToggleRow({ title = "Autoplay", description = "Keep the music going with similar songs.", defaultChecked = false, checked, onChange }: {
-  title?: string; description?: string; defaultChecked?: boolean; checked?: boolean; onChange?: (enabled: boolean) => void;
+export function ToggleRow({ title = "Autoplay", description = "Keep the music going with similar songs.", defaultChecked = false, onChange }: {
+  title?: string; description?: string; defaultChecked?: boolean; onChange?: (enabled: boolean) => void;
 }) {
-  const [ownEnabled, setOwnEnabled] = useState(defaultChecked);
-  const enabled = checked ?? ownEnabled;
-  return <div className="setting-switch"><div><b>{title}</b><small>{description}</small></div><button type="button" onClick={() => { const next = !enabled; setOwnEnabled(next); onChange?.(next); }} className={`switch ${enabled ? "on" : ""}`} aria-label={title} aria-pressed={enabled}><i aria-hidden="true"/></button></div>;
+  const [enabled, setEnabled] = useState(defaultChecked);
+  return <div className="setting-switch"><div><b>{title}</b><small>{description}</small></div><button type="button" onClick={() => { const next = !enabled; setEnabled(next); onChange?.(next); }} className={`switch ${enabled ? "on" : ""}`} aria-label={title} aria-pressed={enabled}><i aria-hidden="true"/></button></div>;
 }
 
 export function PlaylistTile({ title = "Sunday Afternoon", description = "20 songs · Easy listening for slow days", cover = "/covers/02.png", href = "/songs" }: {
